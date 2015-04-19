@@ -1,0 +1,15 @@
+<h1>本の投稿をする</h1>
+<% @amazon.items.each do |i|%>
+  <%= image_tag i.get('SmallImage/URL')%>
+  <%= i.get('ItemAttributes/Title') %>
+<% end %>
+
+<h2> 読んだ本の投稿 </h2>
+<%= form_for(@post) do |f|%>
+  <p><%= f.label "読んだ感想" %></p>
+  <p>  <%= f.text_area :review %></p>
+  <%= f.hidden_field :item_id, :value => @itemid %>
+  <%= f.submit '登録する' %>
+<% end %>
+<%= link_to "戻る",:back %>
+      

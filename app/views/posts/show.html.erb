@@ -1,0 +1,9 @@
+<p><%= @post.user.name%></p>
+<% @amazon.items.each do |i|%>
+  <%= image_tag i.get('SmallImage/URL')%>
+  <%= i.get('ItemAttributes/Title') %>
+<% end %>
+<h1><%= @post.review %><h1>
+    <p><%= @post.recommend_rate %></p>
+    <p>Posted <%= time_ago_in_words(@post.created_at)%> ago.</p>
+
