@@ -11,9 +11,9 @@
         <%= post.recommend_rate %>
         <%= link_to post.review, post_path(post.id) %>
         <% if post.favorited_by? current_user %>
-			<%= link_to "お気に入りの削除", post_favorites_path(post.id,current_user.favorite.find_by(post_id: post.id).id), method: :delete %>
+			<%= link_to "お気に入りの削除", post_favorite_path(post.id), method: :delete %>
 		<% else%>
-			<%= link_to "お気に入りの登録", post_favorites_path(post.id), method: :post %>
+			<%= link_to "お気に入りの登録", post_favorite_path(post.id), method: :post %>
 		<% end %>
 			</li>
       <% end %>

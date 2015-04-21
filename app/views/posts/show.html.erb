@@ -1,7 +1,9 @@
 <p><%= @post.user.name%></p>
 <% @amazon.items.each do |i|%>
-  <%= image_tag i.get('SmallImage/URL')%>
-  <%= i.get('ItemAttributes/Title') %>
+   <%= link_to i.get('DetailPageURL') do %>
+ <%= image_tag i.get('SmallImage/URL')%>
+ <% end %>
+ <%= i.get('ItemAttributes/Title') %>
 <% end %>
 <h1><%= @post.review %><h1>
     <p><%= @post.recommend_rate %></p>

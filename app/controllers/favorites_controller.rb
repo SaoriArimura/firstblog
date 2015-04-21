@@ -12,7 +12,7 @@ class FavoritesController < ApplicationController
   end
 
   def destroy
-    @favorite = current_user.favorites.find_by!(params[:post_id],params[:id])
+    @favorite = current_user.favorites.find_by!(params[:id])
     @favorite.destroy
     redirect_to posts_url, notice: "お気に入りを解除しました"
   end
