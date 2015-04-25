@@ -10,17 +10,15 @@ end
 def show
   @post = Post.find(params[:id])
   @amazon = Amazon::Ecs.item_lookup(@post.item.book_id, :response_group => 'Medium')
+  @replies = @post.replies.all
+  @reply = Reply.new
 end
 
-
 def create
-  @post = current_user.posts.build(post_params)
+  @post = current_user.posts.new(post_params)
   if @post.save
-  redirect_to posts_url, notice: '登録が完了しました'
-  else
-  render items_index_path
+    redirect_to posts_path
   end
-  
 end
 
 def destroy

@@ -15,6 +15,7 @@ Rails.application.routes.draw do
   end
   resources :relationships, :only =>[:create, :destroy]
   resources :items
+  resources :replies, :only =>[:create] 
   #resources :posts
   #resources :items
   resources :users do

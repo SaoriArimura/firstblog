@@ -14,7 +14,11 @@
 			<%= link_to "お気に入りの削除", post_favorite_path(post.id), method: :delete %>
 		<% else%>
 			<%= link_to "お気に入りの登録", post_favorite_path(post.id), method: :post %>
-		<% end %>
-			</li>
+    <% end %>
+    コメントの件数
+    <%= post.replies.size %>
+    お気に入りの件数
+    <%= post.favorites.size %>
+    </li>
       <% end %>
     </ul>

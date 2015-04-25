@@ -1,4 +1,4 @@
-<p><%= @post.user.name%></p>
+<p><%= link_to @post.user.name, users_show_path(id: @post.user.id )%></p>
 <% @amazon.items.each do |i|%>
    <%= link_to i.get('DetailPageURL') do %>
  <%= image_tag i.get('SmallImage/URL')%>
@@ -8,4 +8,17 @@
 <h1><%= @post.review %><h1>
     <p><%= @post.recommend_rate %></p>
     <p>Posted <%= time_ago_in_words(@post.created_at)%> ago.</p>
+    <h2>コメント</h2>
+    <% @replies.each do |r| %>
+      <%=  User.find_by(id: r.user_id).name %>
+      <p> <%= r.context %></p>
+      <p><%= time_ago_in_words(r.created_at)%>ago</p>
+    <% end %>
 
+    <h2>この投稿にコメントする</h2> 
+    <%= form_for(@reply) do |f| %> 
+      <p> <%= f.label :コメント %></p>
+      <p> <%= f.hidden_field :post_id, :value => @post.id %> </p>
+      <p> <%= f.text_area :context %> </p>
+      <p> <%= f.submit %> </p>
+    <% end %> 

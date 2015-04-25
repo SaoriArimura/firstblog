@@ -26,7 +26,7 @@ class User < ActiveRecord::Base
   #ユーザーがポストを複数所有する
   has_many :posts, dependent: :destroy
   has_many :favorites, dependent: :destroy 
-
+  has_many :replies, dependent: :destroy
   #ユーザー/リレーションシップのhas_manyの関連付けを実装
   #ユーザーを削除したら、ユーザーのリレーションシップも同時に削除される
   has_many :relationships, foreign_key: "follower_id", dependent: :destroy

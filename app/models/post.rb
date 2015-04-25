@@ -10,6 +10,7 @@ class Post < ActiveRecord::Base
  belongs_to :user 
  belongs_to :item
  has_many :favorites, dependent: :destroy
+ has_many :replies, dependent: :destroy
  #デフォの順番の指定
  default_scope -> { order('created_at DESC') }
 

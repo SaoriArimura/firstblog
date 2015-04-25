@@ -1,4 +1,5 @@
 <h1>本の投稿をする</h1>
+
 <% @amazon.items.each do |i|%>
   <%= image_tag i.get('SmallImage/URL')%>
   <%= i.get('ItemAttributes/Title') %>
