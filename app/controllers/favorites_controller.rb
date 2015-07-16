@@ -1,20 +1,19 @@
 class FavoritesController < ApplicationController
- # before_filter :require_login
-
+  before_action :authenticate_user!
   def create
-    @post    = Post.find(params[:post_id])
-    @favorite = current_user.favorites.build(post_id: @post.id)
+    @post = Post.find(params[:post_id])
+    @favorite = @current_user.favorites.build(post_id: @post.id)
     if @favorite.save
-      redirect_to posts_url, notice: "お気に入りに登録しました"
+      redirect_to(:back)
     else
-      redirect_to posts_url, alert: "このツイートはお気に入りに登録できません"
+      redirect_to(:back)
     end
   end
 
   def destroy
-    @favorite = current_user.favorites.find_by!(params[:id])
+    @favorite = @current_user.favorites.find_by!(params[:id])
     @favorite.destroy
-    redirect_to posts_url, notice: "お気に入りを解除しました"
-  end
+    redirect_to(:back)
+   end
 
 end

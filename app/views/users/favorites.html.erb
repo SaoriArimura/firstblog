@@ -1,0 +1,6 @@
+<div class="container" style="padding:5px 0" >
+  <h1><%= @user.name %>さんのお気に入り<h1>
+   <h5><%= page_entries_info @favorites%></h5>
+    <%=  render partial: "posts/posts", locals: {posts: @favorites}%>
+    <div align="center"><h4> <%= paginate @favorites, outer_window: 4 %></h4></div>
+</div>

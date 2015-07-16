@@ -1,0 +1,8 @@
+
+ <div class="container" style="padding:5px 0" >
+   <h1><%= @user.name %>さんの投稿<h1>
+   <h5><%= page_entries_info @posts %></h5>
+    <%=  render partial: "posts/posts", locals: {posts: @posts}%>
+    <div align="center"><h4> <%=paginate @posts, outer_window: 4 %></h4></div>
+</div>
+   

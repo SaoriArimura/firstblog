@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="ja"> 
+  <head>
+    <meta charset="utf-8">
+    <title>読書ブログ</title>
+    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
+    <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+    <%= csrf_meta_tags %>
+  </head>
+  <body>
+
+
+
+<div class="container">
+<h1>投稿管理画面</h1>
+<table class="table table-hover">
+  <ul>
+    <% @posts.each do |post| %>
+      <tr>
+        <td><%= image_tag post.item.imgURL %><%= post.item.title %>
+          | <%= post.item.author %>
+          <td> <%= post.user.name %></td>
+          <td>  <%= simple_format(post.review) %></td>
+        <td> <%= button_to "この投稿を削除する" ,admins_post_path(post.id), method: :delete ,data: {confirm: "本当に削除しますか？"}, class: 'btn btn-danger btn-xs'%>
+        </td>
+        </tr>
+      <% end %>
+    </ul>
+  </table>
+  <%= link_to  "ユーザー管理画面へ",admins_users_path,class: 'btn btn-primary'  %>
+  <%= link_to "管理ユーザーをログアウト", destroy_admin_session_path, class: 'btn btn-default', method: :delete %>
+</div>
+
+
+</body>
+</html>

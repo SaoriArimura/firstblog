@@ -1,35 +1,40 @@
 class UsersController < ApplicationController
- 
- # before_action :signed_in_user,
-  #                  only: [:index, :show, :destroy, :edit, :update, :following, :followers]
-
+before_action :set_user, except: [:index] 
+before_action :authenticate_user!
   def index
     @users = User.all
   end
 
   def show
-    @user = User.find(params[:id])   
     @posts = @user.posts
   end
 
+  def posts
+    userposts = @user.posts
+    @posts = userposts.page(params[:page])
+  end
+ 
   def favorites
-    @user = User.find(params[:id])
+     userfavorites = @user.favorite_posts
+     @favorites = userfavorites.page(params[:page])
+  
   end
 
-
   def following
-    @title = "Following"
-    @user = User.find(params[:id])
+    @title = "フォロー"
     @users = @user.followed_users
     render 'show_follow'
   end
 
   def followers
-    @title = "Followers"
-    @user = User.find(params[:id])
+    @title = "フォロワー"
     @users = @user.followers
     render 'show_follow'
   end
 
+  private
+  def set_user
+    @user = User.find(params[:id])
+  end
 
 end

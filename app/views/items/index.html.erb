@@ -1,26 +1,38 @@
-<div>
+<div class="container"> 
+  <h1>本を検索</h1>
+  <form class="navbar-form navbar-left" role="seaarch" action="/items/index"> 
+    <div class="form-group has-warning">
+      <input type="text" class="form-control" placeholder="作品名,著者名" name="keyword">
+    </div>
+    <button type="submit" class="btn btn-default">検索</button>
+  </form>
 
-  <%= form_tag items_index_path do %>
-    <%= text_field_tag 'keyword', @keyword %>
-    <%= submit_tag '検索' %>
-  <% end %>
-</div>
-<div>
-  <% if @book_id.present? %>
-    <ul style="list-style: none;">
-      <% @book_id.items.each do |i| %>
-        <li style="clear: both;">
-        <div style="width: 150px;float: left;text-align:center;">
-          <%= link_to i.get('DetailPageURL') do %>
-            <%= image_tag i.get('SmallImage/URL'), {:style => 'border: none;'} %>
-          <% end %>
-        </div>
-        <div style="width: 150px; float: left;"><%= i.get('ASIN') %></div>
-        <div style="width: 150px; float: left;">
-          <%= link_to i.get('ItemAttributes/Title'), items_path(item: { book_id: i.get('ASIN')}), :method => :create %></div>
-      <div style="width: 150px; float: left;"><%= i.get('ItemAttributes/Author') %></div>
-        </li>
-      <% end %> 
-    </ul>
-  <% end %>
-</div>
+  <div>
+    <% if @item.present? %>
+      <div class="container" style="padding:10px 0">
+        <table class="table table-hover">
+          <thead>
+            <tr>
+              <th><span class="glyphicon glyphicon-book" aria-hidden="true"></span></th>
+              <th>書名</th>
+              <th>作者</th>
+              <th>価格(円)</th>
+              <th>出版社</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% @item.each do |i| %>
+              <tr>
+                <td><%= image_tag i.get('SmallImage/URL')%></td>
+                <td><%= link_to i.get('ItemAttributes/Title') , items_create_path(:item => {:book_id => i.get('ASIN'), :title => i.get('ItemAttributes/Title'), :author => i.get('ItemAttributes/Author'), :manufacturer => i.get('ItemAttributes/Manufacturer'), :imgURL => i.get('SmallImage/URL'), :bookURL => i.get('DetailPageURL'), :price => i.get('ItemAttributes/ListPrice/Amount')}) %></td>
+                <td><%= i.get('ItemAttributes/Author') %></td>
+                <td><%= i.get('ItemAttributes/ListPrice/Amount') %></td>
+                <td><%= i.get('ItemAttributes/Manufacturer') %></td>
+              </tr>
+            <% end %> 
+          </tbody>
+        </table> 
+      </div>
+    <% end %> 
+  </div>
+

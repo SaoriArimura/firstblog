@@ -1,0 +1,44 @@
+ <table class="table table-hover table-bordered">
+    <tbody>
+      <% posts.each do |post| %>
+        <tr>
+          <td>
+            <%= link_to ({ :controller => :items, :action => :show, :id => post.item.id}) do %>
+              <%=image_tag post.item.imgURL , :size => "130x180"%>
+            <% end %>
+          </td>
+          <td>
+            <h4>
+              <%= post.item.title %>
+            </h4>
+            <div> 
+              <h5>
+                <%= post.item.author %> | <%= post.item.manufacturer%> | <%= post.category.name %>
+              </h5>
+            </div>
+            <div style="border-style: solid ; border-width: 1px; padding: 10px 5px 10px 20px; border-color: red;"> 
+              <strong>
+                <h5>
+                  <a href="/users/<%= post.user.id %>"><%= post.user.name %>
+                  </a>
+                </strong>さんのレビュー
+              </h5>
+              <h3> <%= simple_format(post.review[0,30]+"...") %></h3></div>
+            <div> <%= link_to "詳細を見る", post_path(post.id), class: "btn btn-primary" %>
+              <div Align="right"> <h5> <% if user_signed_in? %>
+                    <% if post.favorited_by? current_user %>
+                      <%= link_to "お気に入りの削除", post_favorite_path(post.id),method: :delete %>
+                    <% else%>
+                      <%= link_to "お気に入りの登録", post_favorite_path(post.id),method: :post %>
+                    <% end %>
+                    | <% end %>
+                  コメント
+                  <%= post.replies.size %>件|
+                  お気に入り
+                  <%= post.favorites.size %></h5></div></div></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+
+

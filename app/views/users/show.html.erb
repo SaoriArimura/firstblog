@@ -1,40 +1,36 @@
-<h1><%= @user.name %>さんのページ</h1>
-
-<% if @user.image? %>
-  　　<%= image_tag @user.image.url %>
-  　<% else %>
-    　　<%= image_tag 'noimage.gif' %>
-    　<% end %>
-  <h2> <%= @user.profile %><h2>
-
-      <フォーロー人数など統計>
-      <p>
-      <%= render 'users/shared/stats' %>
-      </p>
-
+<div class="container" style="padding:10px 10" >
+  <h2><%= @user.name %>さんのページ</h2>
+  <hr>
+  <div class="row">
+    <div class="col-xs-12 col-sm-3">
+      <% if @user.image? %> 
+        <%=image_tag @user.image.thumb.url, :size=> "180x180",class: "img-responsive img-rounded"%>
+        　<% else %>
+          　<%= image_tag 'noimage.gif' %>
+          　<% end %>
+      </div>
+      <div class="col-xs-12 col-sm-9">
+        <h3><%=simple_format(@user.profile) %></h3>
+        <br>
+        <br>
+        <h4>
+          <%= render partial: "users/shared/stats",locals: {user: @user} %>
+        </h4>
+    </div>
+    </div>
       <%#ふぉろーボタン%>
       <div class="span8">
         <%= render 'follow_form' if signed_in? %>           
       </div>
 
-      　<投稿一覧>
+      　
       <%if @posts.any?%>
         <h2>読んだ本</h2>
-        <% @posts.each do |post| %>
-          <li>
-          <% @amazon = Amazon::Ecs.item_lookup( post.item.book_id, :response_group => 'Medium')%>
-          <% @amazon.items.each do |i|%>
-          <%= link_to i.get('DetailPageURL') do %>
-            <%= image_tag i.get('SmallImage/URL'), {:style => 'border: none;'} %>
-          <% end %>
-          <%= i.get('ItemAttributes/Title') %>
-          <%= i.get('ItemAttributes/Author') %>
-        <% end %>
-        <%= link_to post.review, post_path(post.id) %>
-        <%= post.recommend_rate %>
-        </li>
+     <%=  render partial: "posts/posts", locals: {posts: @posts}%>
+      <% else %>
+        まだ投稿はありません
       <% end %>
+      <% if @current_user == @user %>
+        <%= link_to '新しい本の登録',items_path, class: "btn btn-default" %>  
       <% end %>
-      <% if current_user == @user %>
-        <%= link_to '新しい本の登録', items_path %>  
-      <% end %>
+    </div>

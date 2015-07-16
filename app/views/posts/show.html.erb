@@ -1,24 +1,59 @@
-<p><%= link_to @post.user.name, users_show_path(id: @post.user.id )%></p>
-<% @amazon.items.each do |i|%>
-   <%= link_to i.get('DetailPageURL') do %>
- <%= image_tag i.get('SmallImage/URL')%>
- <% end %>
- <%= i.get('ItemAttributes/Title') %>
-<% end %>
-<h1><%= @post.review %><h1>
-    <p><%= @post.recommend_rate %></p>
-    <p>Posted <%= time_ago_in_words(@post.created_at)%> ago.</p>
-    <h2>コメント</h2>
-    <% @replies.each do |r| %>
-      <%=  User.find_by(id: r.user_id).name %>
-      <p> <%= r.context %></p>
-      <p><%= time_ago_in_words(r.created_at)%>ago</p>
+<div class="container" style="padding:10px 10" >
+  <div class="jumbotron">
+    <div class="media"><a class="media-left" href="/items/<%=@post.item.id%>">
+        <%=image_tag @post.item.imgURL, :size=> '130x180'%>
+      </a>
+      <div class="media-body">
+        <h2 class="media-heading">
+          <br><br> <%= @post.item.title %></h2>
+        <h4> <%= @post.item.author %>
+          |<%= @post.item.manufacturer%>
+          |<%= @post.category.name%></h4>
+      </div>
+    </div> 
+    <hr>
+    <h3><%= link_to @post.user.name, user_path(id: @post.user.id )%>さんのレビュー</h3> 
+    <div class="well well-lg">
+      <p><%=simple_format(@post.review) %><p>
+    </div>
+    <div align="right"><h5>
+        お気に入り<%= @post.favorites.size %>件|
+        <% if @post.favorited_by? @current_user %>
+          <%= link_to "お気に入り削除", post_favorite_path(@post.id), method: :delete %>
+        <% else%>
+          <%= link_to "お気に入り登録", post_favorite_path(@post.id), method: :post %>
+        <% end %></h5></div>
+    <% if @replies.any? %> 
+      <p>コメント(<%= @post.replies.size %>件)</p>
+      <% @replies.each do |reply| %>
+        <div class="well well-lg">
+          <p> <%=simple_format( reply.context) %> </p>
+          <h6> <%= link_to reply.user.name, user_path(id: reply.user.id) %> 
+            <% if reply.user == @current_user %>|
+              <%= link_to 'コメントを削除する', reply_path(reply.id), method: :delete %>
+            <% end %></h6>
+        </div>
+      <% end %>
+    <% else %>
+      <h4>まだコメントはありません</h4>
     <% end %>
+    <div align="right"> <% if @post.user == @current_user %>
+        <%= link_to "投稿を編集する" ,edit_post_path(@post.id),  class: "btn btn-primary", method: :get %>
+        <%= link_to "投稿を削除する" ,post_path,  class: "btn btn-primary", method: :delete %>
+      <% end %>
+    </div>
+  </div>
+  <div class="jumbotron"> 
+    <%= form_for @reply, :html => {:class => "form-horizontal"} do |f|%> 
+      <fieldset>
+        <%= f.hidden_field :post_id, :value => @post.id %> 
+        <div class="form-group has-error">
+          <%= f.label :context, "この投稿にコメントする" %>
+          <%= f.text_area :context, class: "form-control", :rows =>"3" %></div>
+        <div class="form-actions has-error" align="right">
+          <%= f.submit '投稿', class: "btn btn-primary" %></div>
+      </fieldset>
+    <% end %>
+  </div>
 
-    <h2>この投稿にコメントする</h2> 
-    <%= form_for(@reply) do |f| %> 
-      <p> <%= f.label :コメント %></p>
-      <p> <%= f.hidden_field :post_id, :value => @post.id %> </p>
-      <p> <%= f.text_area :context %> </p>
-      <p> <%= f.submit %> </p>
-    <% end %> 
+

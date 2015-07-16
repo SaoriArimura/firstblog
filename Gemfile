@@ -1,7 +1,12 @@
 source 'https://rubygems.org'
+gem 'nokogiri'
+gem 'kaminari'
 gem 'devise'
+gem 'devise-bootstrap-views'
+gem 'devise-i18n'
+gem 'devise-i18n-views'
 gem 'carrierwave'
-gem 'rmagick', :require => 'RMagick'
+gem 'rmagick', '~> 2.15.0', :require => 'RMagick'
 gem 'amazon-ecs' 
 gem 'acts_in_relation'
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
@@ -15,8 +20,7 @@ gem 'uglifier', '>= 1.3.0'
 # Use CoffeeScript for .coffee assets and views
 gem 'coffee-rails', '~> 4.1.0'
 # See https://github.com/sstephenson/execjs#readme for more supported runtimes
-# gem 'therubyracer', platforms: :ruby
-
+ gem 'therubyracer', platforms: :ruby
 # Use jquery as the JavaScript library
 gem 'jquery-rails'
 # Turbolinks makes following links in your web application faster. Read more: https://github.com/rails/turbolinks
@@ -44,7 +48,22 @@ group :development, :test do
 
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem 'spring'
-
+=begin
+  group :development do
+    # エラー画面をわかりやすく整形してくれる
+   gem 'better_errors'
+    # better_errorsの画面上にirb/pry(PERL)を表示する
+   gem 'binding_of_caller'
+ end
+=end
+=begin
+gem 'rails-i18n'
+gem 'ransack' 
+=end
+gem 'twitter-bootswatch-rails', '~> 3.3.2.0'
+gem 'twitter-bootswatch-rails-helpers'
+gem 'execjs'
+gem 'less-rails'
 end
 gem 'pry-rails'
 

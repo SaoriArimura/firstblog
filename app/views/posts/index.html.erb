@@ -1,24 +1,7 @@
+ <div class="container" style="padding:5px 0" >
 <h1>すべての投稿<h1>
+   <h5><%= page_entries_info @posts %></h5>
+    <%=  render partial: "posts/posts", locals: {posts: @posts}%>
+    <div align="center"><h4> <%= paginate @posts, outer_window: 4 %></h4></div>
+</div>
 
-    <ul><% @posts.each do |post| %>
-        <li>
-        <% @amazon = Amazon::Ecs.item_lookup(post.item.book_id, :response_group => 'Medium')%>
-        <% @amazon.items.each do |i|%>
-          <%= image_tag i.get('SmallImage/URL')%>
-          <%= i.get('ItemAttributes/Title') %>
-        <% end %>
-        <%= User.find_by(id: post.user_id).name %>
-        <%= post.recommend_rate %>
-        <%= link_to post.review, post_path(post.id) %>
-        <% if post.favorited_by? current_user %>
-			<%= link_to "お気に入りの削除", post_favorite_path(post.id), method: :delete %>
-		<% else%>
-			<%= link_to "お気に入りの登録", post_favorite_path(post.id), method: :post %>
-    <% end %>
-    コメントの件数
-    <%= post.replies.size %>
-    お気に入りの件数
-    <%= post.favorites.size %>
-    </li>
-      <% end %>
-    </ul>
