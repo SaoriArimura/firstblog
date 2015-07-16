@@ -1,22 +1,20 @@
 Rails.application.routes.draw do
-  get 'users/index'
-  get 'posts/create'
-  match 'items/index', via: [:get, :post]
-  get 'items/create'
+ # match 'items/index', via: [:get, :post]
   root 'posts#index'
-  devise_for :users, :controllers => {
+  devise_for :users, :only =>[:sessions,:registrations],
+    :controllers => {
     :sessions      => "users/sessions",
     :registrations => "users/registrations",
-    :passwords     => "users/passwords"
   }
-  devise_for :admins, :controllers => {
+  devise_for :admins,  :only =>[:sessions,:registrations],
+    :controllers => {
     :registrations => 'admins/registrations',
     :sessions => 'admins/sessions'
   }
   resources :relationships, :only =>[:create, :destroy]
   resources :items, :only =>[:index, :create, :show]
   resources :replies, :only =>[:destroy, :create] 
-  resources :users do
+  resources :users, :only =>[:show, :index] do
     member do
       get :following, :followers
     end
