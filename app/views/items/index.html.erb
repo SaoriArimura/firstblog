@@ -24,7 +24,7 @@
             <% @item.each do |i| %>
               <tr>
                 <td><%= image_tag i.get('SmallImage/URL')%></td>
-                <td><%= link_to i.get('ItemAttributes/Title') , items_create_path(:item => {:book_id => i.get('ASIN'), :title => i.get('ItemAttributes/Title'), :author => i.get('ItemAttributes/Author'), :manufacturer => i.get('ItemAttributes/Manufacturer'), :imgURL => i.get('SmallImage/URL'), :bookURL => i.get('DetailPageURL'), :price => i.get('ItemAttributes/ListPrice/Amount')}) %></td>
+                <td><%= link_to i.get('ItemAttributes/Title') , items_path(:item => {:book_id => i.get('ASIN'), :title => i.get('ItemAttributes/Title'), :author => i.get('ItemAttributes/Author'), :manufacturer => i.get('ItemAttributes/Manufacturer'), :imgURL => i.get('SmallImage/URL'), :bookURL => i.get('DetailPageURL'), :price => i.get('ItemAttributes/ListPrice/Amount')}), method: :post %></td>
                 <td><%= i.get('ItemAttributes/Author') %></td>
                 <td><%= i.get('ItemAttributes/ListPrice/Amount') %></td>
                 <td><%= i.get('ItemAttributes/Manufacturer') %></td>
