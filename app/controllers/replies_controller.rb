@@ -1,5 +1,7 @@
 class RepliesController < ApplicationController
+  
   before_action :authenticate_user!
+ 
   def create
     @reply = @current_user.replies.build(post_params)
     if @reply.save
@@ -22,8 +24,5 @@ class RepliesController < ApplicationController
   def post_params
     params.require(:reply).permit(:post_id, :context)
   end
-
-
-
 
 end

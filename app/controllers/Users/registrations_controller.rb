@@ -2,6 +2,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
   before_action :configure_permitted_parameters
 
   require 'RMagick'
+
   def configure_permitted_parameters
     devise_parameter_sanitizer.for(:sign_up) do |u|
       u.permit(:name, :email, :password, :password_confirmation, :profile, :image)
@@ -10,13 +11,10 @@ class Users::RegistrationsController < Devise::RegistrationsController
       u.permit(:current_password, :name, :email, :password, :password_confirmation, :profile, :image)
     end
   end
+
   def after_sign_up_path_for resource
     posts_path # ログイン後に遷移したいパス
   end
- 
-
-  # before_filter :configure_sign_up_params, only: [:create]
-  # before_filter :configure_account_update_params, only: [:update]
 
   # GET /resource/sign_up
   def new
@@ -36,14 +34,14 @@ class Users::RegistrationsController < Devise::RegistrationsController
   end
 
   # PUT /resource
-   def update
-     super
-   end
+  def update
+    super
+  end
 
   # DELETE /resource
-   def destroy
+  def destroy
     super
-   end
+  end
 
   # GET /resource/cancel
   # Forces the session data which is usually expired after sign

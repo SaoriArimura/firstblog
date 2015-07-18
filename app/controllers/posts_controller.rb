@@ -2,6 +2,7 @@ class PostsController < ApplicationController
 
   before_action :authenticate_user!, except:[:index]
   before_action :set_post, except:[:new,:index,:create]
+ 
   def new
     @img = params[:imgURL]
     @title = params[:title]
@@ -15,13 +16,11 @@ class PostsController < ApplicationController
     @posts = Post.page(params[:page])
   end
 
-
   def show
     @replies = @post.replies.all
     @reply = Reply.new
   end
 
- 
   def create
     @post = @current_user.posts.new(post_params)
     if @post.save
@@ -56,12 +55,12 @@ class PostsController < ApplicationController
   end
 
   def destroy
-  if @current_user.id != @post.user.id
-    redirect_to post_path(@post), alert:'削除できません'
-  else
-    @post.destroy
-    redirect_to posts_path, notice:'削除しました'
-  end
+    if @current_user.id != @post.user.id
+      redirect_to post_path(@post), alert:'削除できません'
+    else
+      @post.destroy
+      redirect_to posts_path, notice:'削除しました'
+    end
   end
 
   private

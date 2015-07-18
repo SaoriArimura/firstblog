@@ -1,6 +1,8 @@
 class UsersController < ApplicationController
-before_action :set_user, except: [:index] 
-before_action :authenticate_user!
+ 
+  before_action :set_user, except: [:index] 
+  before_action :authenticate_user!
+  
   def index
     @users = User.all
   end
@@ -10,14 +12,13 @@ before_action :authenticate_user!
   end
 
   def posts
-    userposts = @user.posts
-    @posts = userposts.page(params[:page])
+    user_posts = @user.posts
+    @posts = user_posts.page(params[:page])
   end
- 
+
   def favorites
-     userfavorites = @user.favorite_posts
-     @favorites = userfavorites.page(params[:page])
-  
+    user_favorites = @user.favorite_posts
+    @favorites = user_favorites.page(params[:page])
   end
 
   def following
@@ -33,6 +34,7 @@ before_action :authenticate_user!
   end
 
   private
+
   def set_user
     @user = User.find(params[:id])
   end
