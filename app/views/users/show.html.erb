@@ -16,21 +16,21 @@
         <h4>
           <%= render partial: "users/shared/stats",locals: {user: @user} %>
         </h4>
-    </div>
-    </div>
-      <%#ふぉろーボタン%>
-      <div class="span8">
-        <%= render 'follow_form' if signed_in? %>           
       </div>
-
-      　
-      <%if @posts.any?%>
-        <h2>読んだ本</h2>
-     <%=  render partial: "posts/posts", locals: {posts: @posts}%>
-      <% else %>
-        まだ投稿はありません
-      <% end %>
-      <% if @current_user == @user %>
-        <%= link_to '新しい本の登録',items_path, class: "btn btn-default" %>  
-      <% end %>
     </div>
+    <%#ふぉろーボタン%>
+    <div class="span8">
+      <%= render 'follow_form' if signed_in? %>           
+    </div>
+
+    　
+    <%if @posts.any?%>
+      <h2>読んだ本</h2>
+      <%=  render partial: "posts/posts", locals: {posts: @posts}%>
+    <% else %>
+      まだ投稿はありません
+    <% end %>
+    <% if @current_user == @user %>
+      <%= link_to '新しい本の登録',items_path, class: "btn btn-default" %>  
+    <% end %>
+  </div>

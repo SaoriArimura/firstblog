@@ -1,5 +1,4 @@
 <div class="container" style="padding:10px 10" >
-  <div class="jumbotron">
     <div class="media"><a class="media-left" href="/items/<%=@post.item.id%>">
         <%=image_tag @post.item.imgURL, :size=> '130x180'%>
       </a>
@@ -9,6 +8,11 @@
         <h4> <%= @post.item.author %>
           |<%= @post.item.manufacturer%>
           |<%= @post.category.name%></h4>
+      <div align="right"> <% if @post.user == @current_user %>
+        <%= link_to "投稿を編集する" ,edit_post_path(@post.id),  class: "btn btn-primary", method: :get %>
+        <%= link_to "投稿を削除する" ,post_path,  class: "btn btn-primary", method: :delete %>
+      <% end %>
+    </div>
       </div>
     </div> 
     <hr>
@@ -18,11 +22,12 @@
     </div>
     <div align="right"><h5>
         お気に入り<%= @post.favorites.size %>件|
-        <% if @post.favorited_by? @current_user %>
+        <% if Post.favorited_by?(@current_user, @post) %>
           <%= link_to "お気に入り削除", post_favorite_path(@post.id), method: :delete %>
         <% else%>
           <%= link_to "お気に入り登録", post_favorite_path(@post.id), method: :post %>
         <% end %></h5></div>
+    <hr>
     <% if @replies.any? %> 
       <p>コメント(<%= @post.replies.size %>件)</p>
       <% @replies.each do |reply| %>
@@ -32,18 +37,11 @@
             <% if reply.user == @current_user %>|
               <%= link_to 'コメントを削除する', reply_path(reply.id), method: :delete %>
             <% end %></h6>
-        </div>
+          </div>
       <% end %>
     <% else %>
       <h4>まだコメントはありません</h4>
     <% end %>
-    <div align="right"> <% if @post.user == @current_user %>
-        <%= link_to "投稿を編集する" ,edit_post_path(@post.id),  class: "btn btn-primary", method: :get %>
-        <%= link_to "投稿を削除する" ,post_path,  class: "btn btn-primary", method: :delete %>
-      <% end %>
-    </div>
-  </div>
-  <div class="jumbotron"> 
     <%= form_for @reply, :html => {:class => "form-horizontal"} do |f|%> 
       <fieldset>
         <%= f.hidden_field :post_id, :value => @post.id %> 
@@ -54,6 +52,5 @@
           <%= f.submit '投稿', class: "btn btn-primary" %></div>
       </fieldset>
     <% end %>
-  </div>
-
-
+    </div>
+    </div>

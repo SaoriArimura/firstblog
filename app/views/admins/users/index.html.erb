@@ -8,29 +8,22 @@
     <%= csrf_meta_tags %>
   </head>
   <body>
-
-
-
-<div class="container">
-<h1>ユーザー管理画面</h1>
-
-<ul class="users">
-  <table class="table table-hover">
-    <% @users.each do |user| %>
-      <tr>
-        　<td>　<%= image_tag user.image.thumb.url %>
-          <%= user.name %></td>
-        <td> <%= button_to "このユーザーを削除する" ,admins_user_path(user.id), data: {confirm: "本当に良いですか？"}, method: :delete, class: 'btn btn-danger btn-xs' %>
-        </td>
-      </tr>
-    <% end %>
-  </table>
-</ul>
-
-
-<%= link_to  "投稿管理画面へ",admins_posts_path ,class: 'btn btn-primary'%>
-<%= link_to "管理ユーザーをログアウト", destroy_admin_session_path, class: 'btn btn-default' , method: :delete%>
-</div>
-
-</body>
+    <div class="container">
+      <h1>ユーザー管理画面</h1>
+      <ul class="users">
+        <table class="table table-hover">
+          <% @users.each do |user| %>
+            <tr>
+              　<td>　<%= image_tag user.image.thumb.url %>
+                <%= user.name %></td>
+              <td> <%= button_to "このユーザーを削除する" ,admins_user_path(user.id), data: {confirm: "本当に良いですか？"}, method: :delete, class: 'btn btn-danger btn-xs' %>
+              </td>
+            </tr>
+          <% end %>
+        </table>
+      </ul>
+      <%= link_to  "投稿管理画面へ",admins_posts_path ,class: 'btn btn-primary'%>
+      <%= link_to "管理ユーザーをログアウト", destroy_admin_session_path, class: 'btn btn-default' , method: :delete%>
+    </div>
+  </body>
 </html>

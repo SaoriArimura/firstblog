@@ -8,7 +8,7 @@
   </form>
 
   <div>
-    <% if @item.present? %>
+    <% if @items_with_book_id.present? %>
       <div class="container" style="padding:10px 0">
         <table class="table table-hover">
           <thead>
@@ -21,7 +21,7 @@
             </tr>
           </thead>
           <tbody>
-            <% @item.each do |i| %>
+            <% @items_with_book_id.each do |i| %>
               <tr>
                 <td><%= image_tag i.get('SmallImage/URL')%></td>
                 <td><%= link_to i.get('ItemAttributes/Title') , items_path(:item => {:book_id => i.get('ASIN'), :title => i.get('ItemAttributes/Title'), :author => i.get('ItemAttributes/Author'), :manufacturer => i.get('ItemAttributes/Manufacturer'), :imgURL => i.get('SmallImage/URL'), :bookURL => i.get('DetailPageURL'), :price => i.get('ItemAttributes/ListPrice/Amount')}), method: :post %></td>
