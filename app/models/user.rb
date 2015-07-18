@@ -1,10 +1,9 @@
 class User < ActiveRecord::Base
-
-  # Include default devise modules. Others available are:
-  # :confirmable, :lockable, :timeoutable and :omniauthable
+  
   devise :database_authenticatable, :registerable,
     :recoverable, :rememberable, :trackable, :validatable, 
     :authentication_keys => [:name]
+  
   validates_uniqueness_of :name
   validates_presence_of :name
   validates :name, presence: true, length: { maximum: 50 }
@@ -13,9 +12,8 @@ class User < ActiveRecord::Base
   mount_uploader :image, ImageUploader
 
   def current_user?(current_user)
-    self.id == current_user.id
+    self.id == @current_user.id
   end
-
 
   def self.find_first_by_auth_conditions(warden_conditions)
     conditions = warden_conditions.dup
@@ -54,17 +52,8 @@ class User < ActiveRecord::Base
   end
 
   #現在のユーザーによってフォローされているユーザーに対応するユーザーidを持つポストを見る
-  def feed
-    Post.from_users_followed_by(self)
-  end
+  #def feed
+  #  Post.from_users_followed_by(self)
+  #end
 
-
-
-  #usernameで認証（必須）に変更
-  def email_required?
-    false
-  end
-  def email_changed?
-    false
-  end
 end
